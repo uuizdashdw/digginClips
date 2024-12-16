@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "es6", // ECMAScript 버전
+		"module": "commonjs", // 모듈 시스템
+		"lib": ["dom", "dom.iterable", "esnext"], // 사용할 라이브러리
+		"allowJs": true, // JavaScript 파일을 허용
+		"skipLibCheck": true, // 라이브러리 파일 체크 건너뛰기
+		"strict": true, // 모든 엄격한 타입 검사 활성화
+		"forceConsistentCasingInFileNames": true, // 파일 이름 대소문자 일관성 유지
+		"noEmit": true, // 출력 파일 생성 안 함
+		"esModuleInterop": true, // CommonJS 모듈을 ES 모듈처럼 다루기
+		"moduleResolution": "node", // 모듈 해석 방법
+		"resolveJsonModule": true, // JSON 모듈 가져오기 허용
+		"isolatedModules": true, // 각 파일을 독립적으로 처리
+		"jsx": "react-jsx" // JSX 변환 설정 (React 17 이상)
+	},
+	"include": ["src"], // 포함할 파일 및 폴더
+	"exclude": ["node_modules", "build"] // 제외할 파일 및 폴더
+}
