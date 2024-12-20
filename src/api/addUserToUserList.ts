@@ -9,13 +9,30 @@ export const addUserToUserList = async (user: UserData) => {
 	try {
 		const userDoc = await getDoc(userRef);
 
+		const userNewData = {
+			uid: user.uid,
+			email: user.email,
+			displayName: user.displayName,
+			emailVerified: user.emailVerified,
+			metadata: {
+				createdAt: user.metadata.creationTime,
+				lastSignInTime: user.metadata.lastSignInTime,
+			},
+			clips: user.clips,
+			addedClips: user.addedClips,
+			createdAt: user.createdAt,
+		};
+
+		console.log('### user 기본값 :: ', user);
+		console.log('### USER META DATA ==> ', userNewData);
+
 		if (userDoc.exists()) {
 			await updateDoc(userRef, {
-				users: arrayUnion(user),
+				users: arrayUnion(userNewData),
 			});
 		} else {
 			await setDoc(userRef, {
-				users: [user],
+				users: [userNewData],
 			});
 		}
 	} catch (err) {
@@ -29,6 +46,7 @@ export const registerUser = async (user: FirebaseUser, userName: string) => {
 		email: user.email,
 		displayName: userName,
 		metadata: user.metadata,
+		emailVerified: user.emailVerified,
 		clips: [],
 		addedClips: [],
 		createdAt: new Date().toISOString(),

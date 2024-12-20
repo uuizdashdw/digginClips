@@ -92,7 +92,6 @@ const SignIn = () => {
 	};
 
 	const onSubmitFormData = async () => {
-		console.log('## FORM ==> ', formData);
 		try {
 			const userCredential = await signInWithEmailAndPassword(
 				auth,
@@ -102,8 +101,6 @@ const SignIn = () => {
 
 			const user = userCredential.user;
 			setUser(user);
-
-			console.log('USER ===> ', userCredential);
 
 			alert(`${user.displayName} 님, 환영합니다`);
 			navigate('/');

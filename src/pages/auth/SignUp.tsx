@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 // Components
 import CustomButton from '../../components/button/CustomButton';
+import Loading from '../../components/loading/Loading';
 
 // Firebase Auth
 import { auth } from '../../plugins/firebase';
@@ -39,6 +40,7 @@ const SignUp = () => {
 	});
 
 	const [isDisabled, setIsDisabled] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -58,6 +60,7 @@ const SignUp = () => {
 			passwordCheck: result,
 		}));
 	};
+
 	const handleFormData = (e: ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData(prev => ({
@@ -73,6 +76,7 @@ const SignUp = () => {
 	};
 
 	const onSubmitFormData = async () => {
+		setIsLoading(true);
 		try {
 			const { user } = await createUserWithEmailAndPassword(
 				auth,
@@ -80,10 +84,11 @@ const SignUp = () => {
 				formData.userPassword,
 			);
 
-			await registerUser(user, formData.userName);
 			await updateProfile(user, {
 				displayName: formData.userName,
 			});
+
+			await registerUser(user, formData.userName);
 
 			alert('회원가입이 완료되었습니다');
 			navigate('/');
@@ -92,11 +97,14 @@ const SignUp = () => {
 				alert('사용중인 이메일입니다');
 			}
 			console.error(err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	return (
 		<div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+			{isLoading && <Loading />}
 			<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 				<h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
 					회원가입

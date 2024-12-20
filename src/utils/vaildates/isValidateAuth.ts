@@ -16,7 +16,6 @@ const validatePasswordCheck = (
 	password: string,
 	checkPasssword: string,
 ): boolean => {
-	console.log('## 시발 뭐지 진짜 ', password === checkPasssword);
 	return password === checkPasssword;
 };
 
